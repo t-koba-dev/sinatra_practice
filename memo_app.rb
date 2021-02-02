@@ -71,3 +71,7 @@ delete /\/memo\/([0-9]+)\/destroy/ do
   destroy(params['captures'].first)
   redirect '/'
 end
+
+get /\/.+/ do
+  erb :'404'
+end
