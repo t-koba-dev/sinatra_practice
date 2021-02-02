@@ -9,3 +9,7 @@ end
 get '/memo/new' do
   erb :memo_new
 end
+
+post '/memo/new' do
+  redirect '/'
+end
