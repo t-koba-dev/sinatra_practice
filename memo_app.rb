@@ -10,15 +10,15 @@ def write_file
   File.open("memos_data.json", "w") { |file| file.write(JSON.pretty_generate(@memos)) }
 end
 
-def create(params)
+def create(title, description)
   sample = []
   @memos.keys.each { |memo| sample.push(memo.to_i) }
-  @memos[(sample.sort.last + 1).to_s] = { title: params["title"], description: params["description"] }
+  @memos[(sample.sort.last + 1).to_s] = { title: title, description: description }
   write_file
 end
 
-def edit(params, memo_id)
-  @memos[memo_id] = { title: params["title"], description: params["description"] }
+def edit(title, description, memo_id)
+  @memos[memo_id] = { title: title, description: description }
   write_file
 end
 
@@ -44,7 +44,7 @@ end
 
 post '/memo/new' do
   open_file
-  create(request.params)
+  create(escape_html(params["title"]), escape_html(params["description"]))
   redirect '/'
 end
 
@@ -62,7 +62,7 @@ end
 
 patch /\/memo\/([0-9]+)\/edit/ do
   open_file
-  edit(request.params, params['captures'].first)
+  edit(escape_html(params["title"]), escape_html(params["description"]), params['captures'].first)
   redirect '/'
 end
 
