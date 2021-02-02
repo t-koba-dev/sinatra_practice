@@ -1,8 +1,9 @@
 require 'sinatra'
 require 'sinatra/reloader'
+require 'json'
 
 get '/' do
-  @memos = ['メモ1', 'メモ2', 'メモ3']
+  File.open("memos_data.json") { |file| @memos = JSON.load(file) }
   erb :memos
 end
 
