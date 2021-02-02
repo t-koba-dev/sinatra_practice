@@ -12,6 +12,10 @@
   <p>
     <%= @memo %>
   </p>
+  <p>
+    <a href="/">
+    <%= link_to("/memo/#{@memo[0]}/edit", '編集') %>
+  </p>
 </body>
 </html>
 

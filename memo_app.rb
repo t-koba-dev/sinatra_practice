@@ -36,6 +36,12 @@ end
 
 get /\/memo\/([0-9]+)/ do
   open_file
-  @memo = @memos[params['captures'].first]
+  @memo = [params['captures'].first, @memos[params['captures'].first]]
   erb :memo_show
+end
+
+get /\/memo\/([0-9]+)\/edit/ do
+  open_file
+  @memo = [params['captures'].first, @memos[params['captures'].first]]
+  erb :memo_edit
 end
