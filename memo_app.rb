@@ -13,6 +13,12 @@ def create(params)
   File.open("memos_data.json", "w") { |file| file.write(JSON.pretty_generate(@memos)) }
 end
 
+helpers do
+  def link_to(url, text)
+    %Q(<a href="#{url}">#{text}</a>)
+  end
+end
+
 get '/' do
   open_file
   erb :memos
