@@ -16,7 +16,7 @@
   <p>
     <%= @memo[1]["description"] %>
   </p>
-  <form method="post">
+  <form method="post" action="/memo/<%= @memo[0] %>">
     <input id="hidden" type="hidden" name="_method" value="patch">
     <label for="title">タイトル: </label>
     <input type="text" name="title" id="title" required value="<%= @memo[1]["title"] %>">

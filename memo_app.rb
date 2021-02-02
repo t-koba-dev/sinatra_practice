@@ -42,7 +42,7 @@ get '/memo/new' do
   erb :memo_new
 end
 
-post '/memo/new' do
+post '/memo' do
   open_file
   create(escape_html(params["title"]), escape_html(params["description"]))
   redirect '/'
@@ -60,13 +60,13 @@ get /\/memo\/([0-9]+)\/edit/ do
   erb :memo_edit
 end
 
-patch /\/memo\/([0-9]+)\/edit/ do
+patch /\/memo\/([0-9]+)/ do
   open_file
   edit(escape_html(params["title"]), escape_html(params["description"]), params['captures'].first)
   redirect '/'
 end
 
-delete /\/memo\/([0-9]+)\/destroy/ do
+delete /\/memo\/([0-9]+)/ do
   open_file
   destroy(params['captures'].first)
   redirect '/'
