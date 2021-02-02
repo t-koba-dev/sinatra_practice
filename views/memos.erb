@@ -10,7 +10,7 @@
   <h1>メモアプリ</h1>
   <% @memos.each do |memo| %>
     <p>
-      <%= link_to("/memo/#{memo[0]}", memo) %>
+      <%= link_to("/memo/#{memo[0]}", memo[1]["title"]) %>
     </p>
   <% end %>
   <a href="/memo/new">追加</a>
