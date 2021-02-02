@@ -13,6 +13,11 @@ def create(params)
   File.open("memos_data.json", "w") { |file| file.write(JSON.pretty_generate(@memos)) }
 end
 
+def edit(params, memo_id)
+  @memos[memo_id] = { title: params["title"], description: params["description"] }
+  File.open("memos_data.json", "w") { |file| file.write(JSON.pretty_generate(@memos)) }
+end
+
 helpers do
   def link_to(url, text)
     %Q(<a href="#{url}">#{text}</a>)
@@ -44,4 +49,10 @@ get /\/memo\/([0-9]+)\/edit/ do
   open_file
   @memo = [params['captures'].first, @memos[params['captures'].first]]
   erb :memo_edit
+end
+
+patch /\/memo\/([0-9]+)\/edit/ do
+  open_file
+  edit(request.params, params['captures'].first)
+  redirect '/'
 end
