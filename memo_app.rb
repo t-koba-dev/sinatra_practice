@@ -33,3 +33,9 @@ post '/memo/new' do
   create(request.params)
   redirect '/'
 end
+
+get /\/memo\/([0-9]+)/ do
+  open_file
+  @memo = @memos[params['captures'].first]
+  erb :memo_show
+end
