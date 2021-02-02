@@ -6,16 +6,25 @@ def open_file
   File.open("memos_data.json") { |file| @memos = JSON.load(file) }
 end
 
+def write_file
+  File.open("memos_data.json", "w") { |file| file.write(JSON.pretty_generate(@memos)) }
+end
+
 def create(params)
   sample = []
   @memos.keys.each { |memo| sample.push(memo.to_i) }
   @memos[(sample.sort.last + 1).to_s] = { title: params["title"], description: params["description"] }
-  File.open("memos_data.json", "w") { |file| file.write(JSON.pretty_generate(@memos)) }
+  write_file
 end
 
 def edit(params, memo_id)
   @memos[memo_id] = { title: params["title"], description: params["description"] }
-  File.open("memos_data.json", "w") { |file| file.write(JSON.pretty_generate(@memos)) }
+  write_file
+end
+
+def destroy(memo_id)
+  @memos.delete(memo_id)
+  write_file
 end
 
 helpers do
@@ -54,5 +63,11 @@ end
 patch /\/memo\/([0-9]+)\/edit/ do
   open_file
   edit(request.params, params['captures'].first)
+  redirect '/'
+end
+
+delete /\/memo\/([0-9]+)\/destroy/ do
+  open_file
+  destroy(params['captures'].first)
   redirect '/'
 end

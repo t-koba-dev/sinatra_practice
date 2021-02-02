@@ -13,8 +13,13 @@
     <%= @memo %>
   </p>
   <p>
-    <a href="/">
     <%= link_to("/memo/#{@memo[0]}/edit", '編集') %>
+  </p>
+  <p>
+    <form method="post" action="<%= @memo[0] %>/destroy">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="削除">
+    </form>
   </p>
 </body>
 </html>
