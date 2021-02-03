@@ -36,6 +36,15 @@ def update_db(id, title, description)
   end
 end
 
+def delete_db(id)
+  connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  begin
+    connection.exec("DELETE FROM memos WHERE id = $1", [id])
+  ensure
+    connection.finish
+  end
+end
+
 def create(title, description)
   sample = []
   @memos.each_key { |memo| sample.push(memo.to_i) }
@@ -47,8 +56,7 @@ def edit(title, description, memo_id)
 end
 
 def destroy(memo_id)
-  @memos.delete(memo_id)
-  write_file
+  delete_db(memo_id)
 end
 
 helpers do
