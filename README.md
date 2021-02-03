@@ -21,5 +21,4 @@ Sinatraを使用し、メモアプリを作成
         $ bundle exec ruby memo_app.rb
 
 5. ブラウザからアクセス
-
-        [http://localhost:4567/](http://localhost:4567/)
+[http://localhost:4567/](http://localhost:4567/)
