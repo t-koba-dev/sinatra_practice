@@ -5,8 +5,12 @@ require 'sinatra/reloader'
 require 'json'
 require 'pg'
 
+def connect_to_database
+  PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+end
+
 def load_memos_from_database
-  connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  connection = connect_to_database
   begin
     @memos = {}
     result = connection.exec("SELECT * FROM memos")
@@ -19,7 +23,7 @@ def load_memos_from_database
 end
 
 def insert_record(id, title, description)
-  connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  connection = connect_to_database
   begin
     connection.prepare('insert_plan', "INSERT INTO memos (id, title, description) VALUES ($1, $2, $3)")
     connection.exec_prepared('insert_plan', [id, title, description])
@@ -29,7 +33,7 @@ def insert_record(id, title, description)
 end
 
 def update_record(id, title, description)
-  connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  connection = connect_to_database
   begin
     connection.prepare('update_plan', "UPDATE memos SET id = $1, title = $2, description = $3 WHERE id = $1")
     connection.exec_prepared('update_plan', [id, title, description])
@@ -39,7 +43,7 @@ def update_record(id, title, description)
 end
 
 def delete_record(id)
-  connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  connection = connect_to_database
   begin
     connection.prepare('delete_plan', "DELETE FROM memos WHERE id = $1")
     connection.exec_prepared('delete_plan', [id])
