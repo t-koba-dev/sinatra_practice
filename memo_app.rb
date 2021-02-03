@@ -3,9 +3,19 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
+require 'pg'
 
 def open_file
-  File.open('memos_data.json') { |file| @memos = JSON.parse(file.read) }
+  connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  begin
+    @memos = {}
+    result = connection.exec("SELECT * FROM memos")
+    result.each do |memo|
+      @memos["#{memo['id']}"] = { 'title' => "#{memo['title']}", 'description' => "#{memo['description']}" }
+    end
+  ensure
+    connection.finish
+  end
 end
 
 def write_file
