@@ -5,7 +5,7 @@ require 'sinatra/reloader'
 require 'json'
 require 'pg'
 
-def open_file
+def load_memos_from_database
   connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
   begin
     @memos = {}
@@ -18,7 +18,7 @@ def open_file
   end
 end
 
-def insert_db(id, title, description)
+def insert_record(id, title, description)
   connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
   begin
     connection.prepare('insert_plan', "INSERT INTO memos (id, title, description) VALUES ($1, $2, $3)")
@@ -28,7 +28,7 @@ def insert_db(id, title, description)
   end
 end
 
-def update_db(id, title, description)
+def update_record(id, title, description)
   connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
   begin
     connection.prepare('update_plan', "UPDATE memos SET id = $1, title = $2, description = $3 WHERE id = $1")
@@ -38,7 +38,7 @@ def update_db(id, title, description)
   end
 end
 
-def delete_db(id)
+def delete_record(id)
   connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
   begin
     connection.prepare('delete_plan', "DELETE FROM memos WHERE id = $1")
@@ -51,15 +51,15 @@ end
 def create(title, description)
   sample = []
   @memos.each_key { |memo| sample.push(memo.to_i) }
-  insert_db((sample.max + 1), title, description)
+  insert_record((sample.max + 1), title, description)
 end
 
-def edit(title, description, memo_id)
-  update_db(memo_id, title, description)
+def edit(title, description, id)
+  update_record(id, title, description)
 end
 
-def destroy(memo_id)
-  delete_db(memo_id)
+def destroy(id)
+  delete_record(id)
 end
 
 helpers do
@@ -69,7 +69,7 @@ helpers do
 end
 
 get '/' do
-  open_file
+  load_memos_from_database
   erb :memos
 end
 
@@ -78,31 +78,31 @@ get '/memo/new' do
 end
 
 post '/memo' do
-  open_file
+  load_memos_from_database
   create(escape_html(params['title']), escape_html(params['description']))
   redirect '/'
 end
 
 get(%r{/memo/([0-9]+)}) do
-  open_file
+  load_memos_from_database
   @memo = [params['captures'].first, @memos[params['captures'].first]]
   erb :memo_show
 end
 
 get(%r{/memo/([0-9]+)/edit}) do
-  open_file
+  load_memos_from_database
   @memo = [params['captures'].first, @memos[params['captures'].first]]
   erb :memo_edit
 end
 
 patch(%r{/memo/([0-9]+)}) do
-  open_file
+  load_memos_from_database
   edit(escape_html(params['title']), escape_html(params['description']), params['captures'].first)
   redirect '/'
 end
 
 delete(%r{/memo/([0-9]+)}) do
-  open_file
+  load_memos_from_database
   destroy(params['captures'].first)
   redirect '/'
 end
