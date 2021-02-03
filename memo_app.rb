@@ -6,16 +6,16 @@ require 'json'
 require 'pg'
 
 def connect_to_database
-  PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  PG.connect(user: ENV['PG_USERNAME'], password: ENV['PG_PASSWORD'], dbname: 'sinatra_practice_db')
 end
 
 def load_memos_from_database
   connection = connect_to_database
   begin
     @memos = {}
-    result = connection.exec("SELECT * FROM memos")
+    result = connection.exec('SELECT * FROM memos')
     result.each do |memo|
-      @memos["#{memo['id']}"] = { 'title' => "#{memo['title']}", 'description' => "#{memo['description']}" }
+      @memos[(memo['id']).to_s] = { 'title' => (memo['title']).to_s, 'description' => (memo['description']).to_s }
     end
   ensure
     connection.finish
@@ -25,7 +25,7 @@ end
 def insert_record(id, title, description)
   connection = connect_to_database
   begin
-    connection.prepare('insert_plan', "INSERT INTO memos (id, title, description) VALUES ($1, $2, $3)")
+    connection.prepare('insert_plan', 'INSERT INTO memos (id, title, description) VALUES ($1, $2, $3)')
     connection.exec_prepared('insert_plan', [id, title, description])
   ensure
     connection.finish
@@ -35,7 +35,7 @@ end
 def update_record(id, title, description)
   connection = connect_to_database
   begin
-    connection.prepare('update_plan', "UPDATE memos SET id = $1, title = $2, description = $3 WHERE id = $1")
+    connection.prepare('update_plan', 'UPDATE memos SET id = $1, title = $2, description = $3 WHERE id = $1')
     connection.exec_prepared('update_plan', [id, title, description])
   ensure
     connection.finish
@@ -45,7 +45,7 @@ end
 def delete_record(id)
   connection = connect_to_database
   begin
-    connection.prepare('delete_plan', "DELETE FROM memos WHERE id = $1")
+    connection.prepare('delete_plan', 'DELETE FROM memos WHERE id = $1')
     connection.exec_prepared('delete_plan', [id])
   ensure
     connection.finish
