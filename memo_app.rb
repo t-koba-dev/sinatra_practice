@@ -27,6 +27,15 @@ def insert_db(id, title, description)
   end
 end
 
+def update_db(id, title, description)
+  connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  begin
+    connection.exec("UPDATE memos SET id = $1, title = $2, description = $3 WHERE id = $1", [id, title, description])
+  ensure
+    connection.finish
+  end
+end
+
 def create(title, description)
   sample = []
   @memos.each_key { |memo| sample.push(memo.to_i) }
@@ -34,8 +43,7 @@ def create(title, description)
 end
 
 def edit(title, description, memo_id)
-  @memos[memo_id] = { title: title, description: description }
-  write_file
+  update_db(memo_id, title, description)
 end
 
 def destroy(memo_id)
