@@ -18,15 +18,19 @@ def open_file
   end
 end
 
-def write_file
-  File.open('memos_data.json', 'w') { |file| file.write(JSON.pretty_generate(@memos)) }
+def insert_db(id, title, description)
+  connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
+  begin
+    connection.exec("INSERT INTO memos (id, title, description) VALUES ($1, $2, $3)", [id, title, description])
+  ensure
+    connection.finish
+  end
 end
 
 def create(title, description)
   sample = []
   @memos.each_key { |memo| sample.push(memo.to_i) }
-  @memos[(sample.max + 1).to_s] = { title: title, description: description }
-  write_file
+  insert_db((sample.max + 1), title, description)
 end
 
 def edit(title, description, memo_id)
