@@ -21,7 +21,8 @@ end
 def insert_db(id, title, description)
   connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
   begin
-    connection.exec("INSERT INTO memos (id, title, description) VALUES ($1, $2, $3)", [id, title, description])
+    connection.prepare('insert_plan', "INSERT INTO memos (id, title, description) VALUES ($1, $2, $3)")
+    connection.exec_prepared('insert_plan', [id, title, description])
   ensure
     connection.finish
   end
@@ -30,7 +31,8 @@ end
 def update_db(id, title, description)
   connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
   begin
-    connection.exec("UPDATE memos SET id = $1, title = $2, description = $3 WHERE id = $1", [id, title, description])
+    connection.prepare('update_plan', "UPDATE memos SET id = $1, title = $2, description = $3 WHERE id = $1")
+    connection.exec_prepared('update_plan', [id, title, description])
   ensure
     connection.finish
   end
@@ -39,7 +41,8 @@ end
 def delete_db(id)
   connection = PG::connect(:user => ENV['PG_USERNAME'], :password => ENV['PG_PASSWORD'], :dbname => "sinatra_practice_db")
   begin
-    connection.exec("DELETE FROM memos WHERE id = $1", [id])
+    connection.prepare('delete_plan', "DELETE FROM memos WHERE id = $1")
+    connection.exec_prepared('delete_plan', [id])
   ensure
     connection.finish
   end
