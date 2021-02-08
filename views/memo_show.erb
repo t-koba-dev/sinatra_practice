@@ -1,0 +1,15 @@
+<p>
+  <%= escape_html(@memo["title"]) %>
+</p>
+<p>
+  <%= escape_html(@memo["description"]) %>
+</p>
+<p>
+  <%= link_to("/memos/#{@memo_id}/edit", '編集') %>
+</p>
+<p>
+  <form method="post" action="/memos/<%= @memo_id %>">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="削除">
+  </form>
+</p>
