@@ -5,7 +5,7 @@
 <p>
   <%= escape_html(@memo["description"]) %>
 </p>
-<form method="post" action="/memo/<%= @memo_id %>">
+<form method="post" action="/memos/<%= @memo_id %>">
   <input id="hidden" type="hidden" name="_method" value="patch">
   <label for="title">タイトル: </label>
   <input type="text" name="title" id="title" required value="<%= escape_html(@memo["title"]) %>">
