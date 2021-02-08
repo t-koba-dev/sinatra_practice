@@ -1,8 +1,8 @@
 <p>
-  <%= @memo["title"] %>
+  <%= escape_html(@memo["title"]) %>
 </p>
 <p>
-  <%= @memo["description"] %>
+  <%= escape_html(@memo["description"]) %>
 </p>
 <p>
   <%= link_to("/memo/#{@memo_id}/edit", '編集') %>

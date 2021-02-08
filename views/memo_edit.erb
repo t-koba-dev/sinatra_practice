@@ -1,15 +1,15 @@
 <h2>メモを編集</h2>
 <p>
-  <%= @memo["title"] %>
+  <%= escape_html(@memo["title"]) %>
 </p>
 <p>
-  <%= @memo["description"] %>
+  <%= escape_html(@memo["description"]) %>
 </p>
 <form method="post" action="/memo/<%= @memo_id %>">
   <input id="hidden" type="hidden" name="_method" value="patch">
   <label for="title">タイトル: </label>
-  <input type="text" name="title" id="title" required value="<%= @memo["title"] %>">
+  <input type="text" name="title" id="title" required value="<%= escape_html(@memo["title"]) %>">
   <label for="description">詳細: </label>
-  <input type="text" name="description" id="description" required value="<%= @memo["description"] %>">
+  <input type="text" name="description" id="description" required value="<%= escape_html(@memo["description"]) %>">
   <input type="submit" value="修正">
 </form>
