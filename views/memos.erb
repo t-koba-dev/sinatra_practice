@@ -1,6 +1,6 @@
-<% @memos.each do |memo| %>
+<% @memos.each do |key, value| %>
   <p>
-    <%= link_to("/memo/#{memo[0]}", memo[1]["title"]) %>
+    <%= link_to("/memo/#{key}", value["title"]) %>
   </p>
 <% end %>
 <%= link_to("/memo/new", '追加') %>
