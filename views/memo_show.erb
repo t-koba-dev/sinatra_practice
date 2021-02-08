@@ -1,31 +1,15 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>メモアプリ</title>
-</head>
-
-<body>
-  <a href="/">
-    <h1>メモアプリ</h1>
-  </a>
-  <p>
-    <%= @memo[1]["title"] %>
-  </p>
-  <p>
-    <%= @memo[1]["description"] %>
-  </p>
-  <p>
-    <%= link_to("/memo/#{@memo[0]}/edit", '編集') %>
-  </p>
-  <p>
-    <form method="post" action="/memo/<%= @memo[0] %>">
-      <input type="hidden" name="_method" value="delete">
-      <input type="submit" value="削除">
-    </form>
-  </p>
-</body>
-</html>
-
-
-
+<p>
+  <%= @memo[1]["title"] %>
+</p>
+<p>
+  <%= @memo[1]["description"] %>
+</p>
+<p>
+  <%= link_to("/memo/#{@memo[0]}/edit", '編集') %>
+</p>
+<p>
+  <form method="post" action="/memo/<%= @memo[0] %>">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="削除">
+  </form>
+</p>

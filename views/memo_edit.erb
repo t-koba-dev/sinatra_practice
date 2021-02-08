@@ -1,28 +1,15 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>メモアプリ</title>
-</head>
-
-<body>
-  <a href="/">
-    <h1>メモアプリ</h1>
-  </a>
-  <h2>メモを編集</h2>
-  <p>
-    <%= @memo[1]["title"] %>
-  </p>
-  <p>
-    <%= @memo[1]["description"] %>
-  </p>
-  <form method="post" action="/memo/<%= @memo[0] %>">
-    <input id="hidden" type="hidden" name="_method" value="patch">
-    <label for="title">タイトル: </label>
-    <input type="text" name="title" id="title" required value="<%= @memo[1]["title"] %>">
-    <label for="description">詳細: </label>
-    <input type="text" name="description" id="description" required value="<%= @memo[1]["description"] %>">
-    <input type="submit" value="修正">
-  </form>
-</body>
-</html>
+<h2>メモを編集</h2>
+<p>
+  <%= @memo[1]["title"] %>
+</p>
+<p>
+  <%= @memo[1]["description"] %>
+</p>
+<form method="post" action="/memo/<%= @memo[0] %>">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <label for="title">タイトル: </label>
+  <input type="text" name="title" id="title" required value="<%= @memo[1]["title"] %>">
+  <label for="description">詳細: </label>
+  <input type="text" name="description" id="description" required value="<%= @memo[1]["description"] %>">
+  <input type="submit" value="修正">
+</form>

@@ -1,18 +1,6 @@
-
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>メモアプリ</title>
-</head>
-
-<body>
-  <h1>メモアプリ</h1>
-  <% @memos.each do |memo| %>
-    <p>
-      <%= link_to("/memo/#{memo[0]}", memo[1]["title"]) %>
-    </p>
-  <% end %>
-  <%= link_to("/memo/new", '追加') %>
-</body>
-</html>
+<% @memos.each do |memo| %>
+  <p>
+    <%= link_to("/memo/#{memo[0]}", memo[1]["title"]) %>
+  </p>
+<% end %>
+<%= link_to("/memo/new", '追加') %>
