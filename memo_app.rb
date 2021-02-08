@@ -46,7 +46,7 @@ end
 
 post '/memo' do
   open_file
-  create(escape_html(params['title']), escape_html(params['description']))
+  create(params['title'], params['description'])
   redirect '/'
 end
 
@@ -66,7 +66,7 @@ end
 
 patch '/memo/:memo_id' do |id|
   open_file
-  edit(escape_html(params['title']), escape_html(params['description']), id)
+  edit(params['title'], params['description'], id)
   redirect '/'
 end
 
