@@ -50,27 +50,27 @@ post '/memo' do
   redirect '/'
 end
 
-get(%r{/memo/([0-9]+)}) do
+get '/memo/:memo_id' do |id|
   open_file
-  @memo = [params['captures'].first, @memos[params['captures'].first]]
+  @memo = [id, @memos[id]]
   erb :memo_show
 end
 
-get(%r{/memo/([0-9]+)/edit}) do
+get '/memo/:memo_id/edit' do |id|
   open_file
-  @memo = [params['captures'].first, @memos[params['captures'].first]]
+  @memo = [id, @memos[id]]
   erb :memo_edit
 end
 
-patch(%r{/memo/([0-9]+)}) do
+patch '/memo/:memo_id' do |id|
   open_file
-  edit(escape_html(params['title']), escape_html(params['description']), params['captures'].first)
+  edit(escape_html(params['title']), escape_html(params['description']), id)
   redirect '/'
 end
 
-delete(%r{/memo/([0-9]+)}) do
+delete '/memo/:memo_id' do |id|
   open_file
-  destroy(params['captures'].first)
+  destroy(id)
   redirect '/'
 end
 
