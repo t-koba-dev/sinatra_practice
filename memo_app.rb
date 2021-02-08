@@ -74,6 +74,6 @@ delete(%r{/memo/([0-9]+)}) do
   redirect '/'
 end
 
-get(%r{/.+}) do
+not_found do
   erb :'404'
 end
