@@ -52,13 +52,15 @@ end
 
 get '/memo/:memo_id' do |id|
   open_file
-  @memo = [id, @memos[id]]
+  @memo_id = id
+  @memo = @memos[id]
   erb :memo_show
 end
 
 get '/memo/:memo_id/edit' do |id|
   open_file
-  @memo = [id, @memos[id]]
+  @memo_id = id
+  @memo = @memos[id]
   erb :memo_edit
 end
 
