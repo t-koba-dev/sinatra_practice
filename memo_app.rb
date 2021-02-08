@@ -36,44 +36,48 @@ helpers do
 end
 
 get '/' do
+  redirect '/memos'
+end
+
+get '/memos' do
   open_file
   erb :memos
 end
 
-get '/memo/new' do
+get '/memos/new' do
   erb :memo_new
 end
 
-post '/memo' do
+post '/memos' do
   open_file
   create(params['title'], params['description'])
-  redirect '/'
+  redirect '/memos'
 end
 
-get '/memo/:memo_id' do |id|
+get '/memos/:memo_id' do |id|
   open_file
   @memo_id = id
   @memo = @memos[id]
   erb :memo_show
 end
 
-get '/memo/:memo_id/edit' do |id|
+get '/memos/:memo_id/edit' do |id|
   open_file
   @memo_id = id
   @memo = @memos[id]
   erb :memo_edit
 end
 
-patch '/memo/:memo_id' do |id|
+patch '/memos/:memo_id' do |id|
   open_file
   edit(params['title'], params['description'], id)
-  redirect '/'
+  redirect '/memos'
 end
 
-delete '/memo/:memo_id' do |id|
+delete '/memos/:memo_id' do |id|
   open_file
   destroy(id)
-  redirect '/'
+  redirect '/memos'
 end
 
 not_found do
