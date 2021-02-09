@@ -10,10 +10,10 @@
     <h1>メモアプリ</h1>
   </a>
   <p>
-    <%= @memo[1]["title"] %>
+    <%= @memo[1][:title] %>
   </p>
   <p>
-    <%= @memo[1]["description"] %>
+    <%= @memo[1][:description] %>
   </p>
   <p>
     <%= link_to("/memo/#{@memo[0]}/edit", '編集') %>

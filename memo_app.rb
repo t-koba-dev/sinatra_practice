@@ -15,7 +15,7 @@ def load_memos_from_database
     @memos = {}
     result = connection.exec('SELECT * FROM memos')
     result.each do |memo|
-      @memos[(memo['id']).to_s] = { 'title' => (memo['title']).to_s, 'description' => (memo['description']).to_s }
+      @memos[memo['id'].to_s] = { title: memo['title'], description: memo['description'] }
     end
   ensure
     connection.finish

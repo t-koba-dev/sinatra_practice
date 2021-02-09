@@ -8,9 +8,9 @@
 
 <body>
   <h1>メモアプリ</h1>
-  <% @memos.each do |memo| %>
+  <% @memos.each do |key, value| %>
     <p>
-      <%= link_to("/memo/#{memo[0]}", memo[1]["title"]) %>
+      <%= link_to("/memo/#{key}", value[:title]) %>
     </p>
   <% end %>
   <a href="/memo/new">追加</a>
