@@ -10,16 +10,16 @@
     <h1>メモアプリ</h1>
   </a>
   <p>
-    <%= @memo[1][:title] %>
+    <%= @memo[:title] %>
   </p>
   <p>
-    <%= @memo[1][:description] %>
+    <%= @memo[:description] %>
   </p>
   <p>
-    <%= link_to("/memo/#{@memo[0]}/edit", '編集') %>
+    <%= link_to("/memo/#{@memo_id}/edit", '編集') %>
   </p>
   <p>
-    <form method="post" action="/memo/<%= @memo[0] %>">
+    <form method="post" action="/memo/<%= @memo_id %>">
       <input type="hidden" name="_method" value="delete">
       <input type="submit" value="削除">
     </form>

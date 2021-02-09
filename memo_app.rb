@@ -89,13 +89,17 @@ end
 
 get(%r{/memo/([0-9]+)}) do
   load_memos_from_database
-  @memo = [params['captures'].first, @memos[params['captures'].first]]
+  id = params['captures'].first
+  @memo_id = id
+  @memo = @memos[id]
   erb :memo_show
 end
 
 get(%r{/memo/([0-9]+)/edit}) do
   load_memos_from_database
-  @memo = [params['captures'].first, @memos[params['captures'].first]]
+  id = params['captures'].first
+  @memo_id = id
+  @memo = @memos[id]
   erb :memo_edit
 end
 
