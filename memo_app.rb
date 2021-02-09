@@ -106,10 +106,10 @@ get(%r{/memo/([0-9]+)}) do
 end
 
 get(%r{/memo/([0-9]+)/edit}) do
-  load_memos_from_database
   id = params['captures'].first
-  @memo_id = id
-  @memo = @memos[id]
+  memo = select_one_record(id)
+  @memo_id = memo['id']
+  @memo = { title: memo['title'], description: memo['description'] }
   erb :memo_edit
 end
 
