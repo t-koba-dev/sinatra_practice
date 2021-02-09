@@ -1,0 +1,18 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>メモアプリ</title>
+</head>
+
+<body>
+  <h1>メモアプリ</h1>
+  <% @memos.each do |key, value| %>
+    <p>
+      <%= link_to("/memo/#{key}", value[:title]) %>
+    </p>
+  <% end %>
+  <a href="/memo/new">追加</a>
+</body>
+</html>

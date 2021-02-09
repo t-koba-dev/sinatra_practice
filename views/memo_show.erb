@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>メモアプリ</title>
+</head>
+
+<body>
+  <a href="/">
+    <h1>メモアプリ</h1>
+  </a>
+  <p>
+    <%= @memo[:title] %>
+  </p>
+  <p>
+    <%= @memo[:description] %>
+  </p>
+  <p>
+    <%= link_to("/memo/#{@memo[:id]}/edit", '編集') %>
+  </p>
+  <p>
+    <form method="post" action="/memo/<%= @memo[:id] %>">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="削除">
+    </form>
+  </p>
+</body>
+</html>
