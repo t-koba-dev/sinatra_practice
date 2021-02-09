@@ -45,8 +45,8 @@ end
 def update_record(id, title, description)
   connection = connect_to_database
   begin
-    connection.prepare('update_plan', 'UPDATE memos SET id = $1, title = $2, description = $3 WHERE id = $1')
-    connection.exec_prepared('update_plan', [id, title, description])
+    connection.prepare('update_plan', "UPDATE memos SET title = $1, description = $2 WHERE id = #{id}")
+    connection.exec_prepared('update_plan', [title, description])
   ensure
     connection.finish
   end
