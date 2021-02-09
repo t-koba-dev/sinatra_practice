@@ -22,6 +22,16 @@ def load_memos_from_database
   end
 end
 
+def select_one_record(id)
+  connection = connect_to_database
+  begin
+    result = connection.exec('SELECT * FROM memos WHERE id = $1', [id])
+  ensure
+    connection.finish
+  end
+  result.first
+end
+
 def insert_record(id, title, description)
   connection = connect_to_database
   begin
@@ -88,10 +98,10 @@ post '/memo' do
 end
 
 get(%r{/memo/([0-9]+)}) do
-  load_memos_from_database
   id = params['captures'].first
-  @memo_id = id
-  @memo = @memos[id]
+  memo = select_one_record(id)
+  @memo_id = memo['id']
+  @memo = { title: memo['title'], description: memo['description'] }
   erb :memo_show
 end
 
