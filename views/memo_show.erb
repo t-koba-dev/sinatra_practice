@@ -16,10 +16,10 @@
     <%= @memo[:description] %>
   </p>
   <p>
-    <%= link_to("/memo/#{@memo_id}/edit", '編集') %>
+    <%= link_to("/memo/#{@memo[:id]}/edit", '編集') %>
   </p>
   <p>
-    <form method="post" action="/memo/<%= @memo_id %>">
+    <form method="post" action="/memo/<%= @memo[:id] %>">
       <input type="hidden" name="_method" value="delete">
       <input type="submit" value="削除">
     </form>
