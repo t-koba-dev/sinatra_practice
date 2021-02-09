@@ -100,14 +100,14 @@ end
 get(%r{/memo/([0-9]+)}) do
   id = params['captures'].first
   memo = select_one_record(id)
-  @memo = { id: memo['id'],title: memo['title'], description: memo['description'] }
+  @memo = { id: memo['id'], title: memo['title'], description: memo['description'] }
   erb :memo_show
 end
 
 get(%r{/memo/([0-9]+)/edit}) do
   id = params['captures'].first
   memo = select_one_record(id)
-  @memo = { id: memo['id'],title: memo['title'], description: memo['description'] }
+  @memo = { id: memo['id'], title: memo['title'], description: memo['description'] }
   erb :memo_edit
 end
 
