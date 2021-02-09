@@ -58,7 +58,7 @@ def create(title, description)
   insert_record((sample.max + 1), title, description)
 end
 
-def edit(title, description, id)
+def edit(id, title, description)
   update_record(id, title, description)
 end
 
@@ -101,7 +101,7 @@ end
 
 patch(%r{/memo/([0-9]+)}) do
   load_memos_from_database
-  edit(escape_html(params['title']), escape_html(params['description']), params['captures'].first)
+  edit(params['captures'].first, escape_html(params['title']), escape_html(params['description']))
   redirect '/'
 end
 
